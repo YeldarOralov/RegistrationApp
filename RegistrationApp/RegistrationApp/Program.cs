@@ -21,6 +21,9 @@ namespace RegistrationApp
             string patternPhone = @"^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$";
             string patternPassword = @"(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$";
             int choose;
+            string enterPhone;
+            string enterPass;
+            bool enterCheck=false;
             Account acc = new Account
             {
                 Email = "eldar.oralov@gmail.com",
@@ -69,7 +72,34 @@ namespace RegistrationApp
                     }
                     break;
                 case 2:
-                case 3: break;
+                    Console.WriteLine("Введите номер телефона: ");
+                    enterPhone = Console.ReadLine();
+                    Console.WriteLine("Введите пароль: ");
+                    enterPass = Console.ReadLine();
+                    using (BinaryReader reader = new BinaryReader(File.Open("Data.bin", FileMode.Open)))
+                    {
+                        while (reader.PeekChar() > -1)
+                        {
+                            string Email = reader.ReadString();
+                            string Phone = reader.ReadString();
+                            string Password = reader.ReadString();
+                            string City = reader.ReadString();
+                            int Age = reader.ReadInt32();
+
+                            if (Phone == enterPhone && Password == enterPass)
+                            {
+                                enterCheck = true;
+                                break;
+                            }                            
+                        }
+                    }
+                    if (enterCheck==true)
+                    {
+                        Console.WriteLine("Вы вошли в аккаунт ");
+                    }
+                    break;
+                case 3:
+                    break;
                 
             }
 
